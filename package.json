@@ -41,7 +41,7 @@
   "scripts": {
     "build": "webpack --config webpack.config.js",
     "watch": "webpack -w --config webpack.config.js",
-    "version": "node ./sync-manifest.js && git add manifest.json",
+    "version": "changeset version && node ./sync-manifest.js && npm i --package-lock-only",
     "format": "prettier . --write",
     "format:check": "prettier . --check"
   },
