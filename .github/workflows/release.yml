@@ -10,7 +10,7 @@ on:
 
 jobs:
   release:
-    if: github.repository == 'magovpt/accessmonitor-ce'
+    if: github.repository == 'amagovpt/accessmonitor-ce'
     runs-on: ubuntu-latest
     permissions:
       contents: write
