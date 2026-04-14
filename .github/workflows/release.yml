@@ -10,7 +10,6 @@ on:
 
 jobs:
   release:
-    if: github.repository == 'amagovpt/accessmonitor-ce'
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -38,7 +37,7 @@ jobs:
         id: changesets
         uses: changesets/action@v1
         with:
-          publish: echo "Versioning complete, handing over to manual release"
+          version: npm run version
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
