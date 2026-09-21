@@ -94,6 +94,9 @@ function generateScore(report: any): string {
 
   for (const test in report.data.tot.results) {
     const value = ruleset[test];
+    if (!value) {
+      continue;
+    }
 
     if (value.result === 'warning') {
       continue;
@@ -239,7 +242,11 @@ function calculateConform(results: any): string {
   };
   for (const test in results || {}) {
     if (test) {
-      let level = ruleset[test]['level'].toUpperCase();
+      const rule = ruleset[test];
+      if (!rule) {
+        continue;
+      }
+      let level = rule['level'].toUpperCase();
       if (testColors[test] === 'R') {
         errors[level]++;
       }
@@ -342,10 +349,14 @@ function process(tot: any, url?: any): any {
   for (const test in ruleset) {
     if (test) {
       if (tot.results[test]) {
-        let tes = ruleset[test]['test'];
-        const lev = ruleset[test]['level'];
-        const ref = ruleset[test]['ref'];
-        const ele = ruleset[test]['elem'];
+        const rule = ruleset[test];
+        if (!rule) {
+          continue;
+        }
+        let tes = rule['test'];
+        const lev = rule['level'];
+        const ref = rule['ref'];
+        const ele = rule['elem'];
 
         let color;
 
@@ -393,12 +404,12 @@ function process(tot: any, url?: any): any {
 
         result['ref_website'] = refWebsite(ref);
         result['relation'] =
-          ruleset[test]['ref'].length > 3 ? 'relationACT' : 'relationT';
+        rule['ref'].length > 3 ? 'relationACT' : 'relationT';
         result['ref_related_sc'] = new Array();
         result['value'] = tnum;
         result['prio'] = color === 'ok' ? 3 : color === 'err' ? 1 : 2;
 
-        const scstmp = ruleset[test]['scs'];
+        const scstmp = rule['scs'];
 
         for (let s in scstmp) {
           if (s) {
